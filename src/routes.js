@@ -14,7 +14,7 @@ export default function Routes() {
       <Stack.Navigator
         initialRouteName="Home"
         screenOptions={{
-          headerTitleAlign: 'center',
+          headerTitleAlign: 'left',
         }}>
         <Stack.Screen
           name="Home"
