@@ -1,6 +1,26 @@
 import React from 'react';
-import {Text} from 'react-native';
+
+import {
+  ProductList,
+  Product,
+  ProductImg,
+  ProductName,
+  ProductValue,
+  ProductButton,
+  ProductButtonText,
+} from './styles';
 
 export default function Home() {
-  return <Text>Home</Text>;
+  return (
+    <ProductList>
+      <Product>
+        <ProductImg source={{uri: ''}} />
+        <ProductName />
+        <ProductValue />
+        <ProductButton>
+          <ProductButtonText>adicionar</ProductButtonText>
+        </ProductButton>
+      </Product>
+    </ProductList>
+  );
 }
