@@ -10,6 +10,6 @@ export const ProductName = styled.Text``;
 
 export const ProductValue = styled.Text``;
 
-export const ProductButton = styled.Button``;
+export const ProductButton = styled.TouchableOpacity``;
 
 export const ProductButtonText = styled.Text``;
