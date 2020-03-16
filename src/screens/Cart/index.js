@@ -13,7 +13,6 @@ import {
   ProductName,
   ProductValue,
   TrashButton,
-  Trash,
   ProductAmount,
   Amount,
   AmountInput,

@@ -8,6 +8,7 @@ import Home from './screens/Home';
 import Cart from './screens/Cart';
 
 import Logo from './assets/images/logo.svg';
+import CartButton from './components/CartButton';
 
 const Stack = createStackNavigator();
 
@@ -21,6 +22,7 @@ export default function Routes() {
             backgroundColor: '#333',
           },
           headerTitle: props => <Logo height={200} width={200} />,
+          headerRight: () => <CartButton />,
         }}>
         <Stack.Screen
           name="Home"
