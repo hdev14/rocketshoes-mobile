@@ -21,16 +21,17 @@ export default class Home extends Component {
 
   async componentDidMount() {
     const response = await api.get('/products');
+
     this.setState({
       products: response.data,
     });
   }
 
-  renderItem = product => (
+  renderItem = ({item}) => (
     <Product>
-      <ProductImg source={{uri: product.image}} />
-      <ProductName>{product.title}</ProductName>
-      <ProductValue>{product.price}</ProductValue>
+      <ProductImg source={{uri: item.image}} />
+      <ProductName>{item.title}</ProductName>
+      <ProductValue>R$ {item.price}</ProductValue>
 
       <ProductButton title="button">
         <CartIcon name="shopping-cart" color="#ddd" size={25} />
@@ -48,7 +49,7 @@ export default class Home extends Component {
           horizontal
           data={products}
           extractkeyExtrator={item => item.id}
-          renderItem={({item}) => this.renderItem(item)}
+          renderItem={this.renderItem}
         />
       </Container>
     );
