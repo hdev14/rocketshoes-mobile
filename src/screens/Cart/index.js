@@ -50,7 +50,7 @@ class Cart extends Component {
 
                       <ProductDetails>
                         <ProductName>{item.title}</ProductName>
-                        <ProductValue>R$ {item.price}</ProductValue>
+                        <ProductValue>{item.formatedPrice}</ProductValue>
                       </ProductDetails>
 
                       <TrashButton onPress={() => removeFromCart(item.id)}>
@@ -68,7 +68,7 @@ class Cart extends Component {
                         />
                         <AmountIcon name="tag" color="#333" size={25} />
                       </Amount>
-                      <Subtotal>R$ {item.subtotal}</Subtotal>
+                      <Subtotal>{item.subtotal}</Subtotal>
                     </ProductAmount>
                   </View>
                 )}
@@ -77,7 +77,7 @@ class Cart extends Component {
               <CartFooter>
                 <Total>
                   <TotalText>total</TotalText>
-                  <TotalValue>R$ {total}</TotalValue>
+                  <TotalValue>{total}</TotalValue>
                 </Total>
                 <CartFooterButton>
                   <CartFooterButtonText>finalizar pedido</CartFooterButtonText>
@@ -101,11 +101,14 @@ class Cart extends Component {
 const mapStateProps = state => ({
   cart: state.cart.map(product => ({
     ...product,
-    subtotal: product.price * product.amount,
+    formatedPrice: `R$ ${product.price.toLocaleString('pt-BR')}`,
+    subtotal: `R$ ${(product.price * product.amount).toLocaleString('pt-BR')}`,
   })),
-  total: state.cart.reduce((total, product) => {
-    return total + product.price * product.amount;
-  }, 0),
+  total: ` R$ ${state.cart
+    .reduce((total, product) => {
+      return total + product.price * product.amount;
+    }, 0)
+    .toLocaleString('pt-BR')}`,
 });
 
 const mapDispatch = dispatch => bindActionCreators(CartActions, dispatch);
