@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Text} from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {View} from 'react-native';
@@ -27,6 +28,7 @@ import {
   TotalValue,
   CartFooterButton,
   CartFooterButtonText,
+  CartEmpty,
 } from './styles';
 
 class Cart extends Component {
@@ -36,47 +38,60 @@ class Cart extends Component {
     return (
       <Container>
         <CartSection>
-          <ProductList
-            data={cart}
-            extractKey={item => item.id}
-            renderItem={({item}) => (
-              <View key={item}>
-                <Product>
-                  <ProductImg source={{uri: item.image}} />
+          {cart.length !== 0 ? (
+            <>
+              <ProductList
+                data={cart}
+                extractKey={item => item.id}
+                renderItem={({item}) => (
+                  <View key={item}>
+                    <Product>
+                      <ProductImg source={{uri: item.image}} />
 
-                  <ProductDetails>
-                    <ProductName>{item.title}</ProductName>
-                    <ProductValue>R$ {item.price}</ProductValue>
-                  </ProductDetails>
+                      <ProductDetails>
+                        <ProductName>{item.title}</ProductName>
+                        <ProductValue>R$ {item.price}</ProductValue>
+                      </ProductDetails>
 
-                  <TrashButton onPress={() => removeFromCart(item.id)}>
-                    <Icon name="trash-2" color="#333" size={25} />
-                  </TrashButton>
-                </Product>
+                      <TrashButton onPress={() => removeFromCart(item.id)}>
+                        <Icon name="trash-2" color="#333" size={25} />
+                      </TrashButton>
+                    </Product>
 
-                <ProductAmount>
-                  <Amount>
-                    <AmountInput
-                      defaultValue={String(item.amount)}
-                      onChangeText={text => updateAmount(item.id, Number(text))}
-                    />
-                    <AmountIcon name="tag" color="#333" size={25} />
-                  </Amount>
-                  <Subtotal>R$ {item.subtotal}</Subtotal>
-                </ProductAmount>
-              </View>
-            )}
-          />
+                    <ProductAmount>
+                      <Amount>
+                        <AmountInput
+                          defaultValue={String(item.amount)}
+                          onChangeText={text =>
+                            updateAmount(item.id, Number(text))
+                          }
+                        />
+                        <AmountIcon name="tag" color="#333" size={25} />
+                      </Amount>
+                      <Subtotal>R$ {item.subtotal}</Subtotal>
+                    </ProductAmount>
+                  </View>
+                )}
+              />
 
-          <CartFooter>
-            <Total>
-              <TotalText>total</TotalText>
-              <TotalValue>R$ {total}</TotalValue>
-            </Total>
-            <CartFooterButton>
-              <CartFooterButtonText>finalizar pedido</CartFooterButtonText>
-            </CartFooterButton>
-          </CartFooter>
+              <CartFooter>
+                <Total>
+                  <TotalText>total</TotalText>
+                  <TotalValue>R$ {total}</TotalValue>
+                </Total>
+                <CartFooterButton>
+                  <CartFooterButtonText>finalizar pedido</CartFooterButtonText>
+                </CartFooterButton>
+              </CartFooter>
+            </>
+          ) : (
+            <CartEmpty>
+              <Icon name="shopping-cart" color="#ddd" size={60} />
+              <Text style={{color: '#ddd', fontWeight: 'bold', fontSize: 20}}>
+                Carrinho estava vázio
+              </Text>
+            </CartEmpty>
+          )}
         </CartSection>
       </Container>
     );
