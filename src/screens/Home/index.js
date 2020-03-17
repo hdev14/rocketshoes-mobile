@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Text} from 'react-native';
 
 import api from '../../services/api';
 
@@ -12,6 +13,7 @@ import {
   ProductValue,
   ProductButton,
   ProductButtonText,
+  ProductAmount,
 } from './styles';
 
 export default class Home extends Component {
@@ -34,7 +36,12 @@ export default class Home extends Component {
       <ProductValue>R$ {item.price}</ProductValue>
 
       <ProductButton title="button">
-        <CartIcon name="shopping-cart" color="#ddd" size={25} />
+        <ProductAmount>
+          <CartIcon name="shopping-cart" color="#ddd" size={25} />
+          <Text style={{color: '#ddd', fontSize: 18, fontWeight: 'bold'}}>
+            2
+          </Text>
+        </ProductAmount>
         <ProductButtonText>adicionar</ProductButtonText>
       </ProductButton>
     </Product>
@@ -48,7 +55,7 @@ export default class Home extends Component {
         <ProductList
           horizontal
           data={products}
-          extractkeyExtrator={item => item.id}
+          extractorKey={item => `product-${item.id}`}
           renderItem={this.renderItem}
         />
       </Container>
