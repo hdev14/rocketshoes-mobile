@@ -27,25 +27,35 @@ import {
   CartFooterButtonText,
 } from './styles';
 
-function Cart({cart}) {
+function Cart({dispatch, cart}) {
+  function handleRemoveFromCart(id) {
+    dispatch({
+      type: 'REMOVE_FROM_CART',
+      id,
+    });
+  }
+
   return (
     <Container>
       <CartSection>
         <ProductList
           data={cart}
-          extractKey={item => item}
+          extractKey={item => item.id}
           renderItem={({item}) => (
             <View key={item}>
               <Product>
                 <ProductImg source={{uri: item.image}} />
+
                 <ProductDetails>
                   <ProductName>{item.title}</ProductName>
                   <ProductValue>R$ {item.price}</ProductValue>
                 </ProductDetails>
-                <TrashButton>
+
+                <TrashButton onPress={() => handleRemoveFromCart(item.id)}>
                   <Icon name="trash-2" color="#333" size={25} />
                 </TrashButton>
               </Product>
+
               <ProductAmount>
                 <Amount>
                   <AmountInput value={String(item.amount)} />
