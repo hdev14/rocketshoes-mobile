@@ -4,6 +4,8 @@ import {connect} from 'react-redux';
 
 import api from '../../services/api';
 
+import {addToCart} from '../../store/modules/cart/actions';
+
 import Container from '../../styles/Container';
 import {
   CartIcon,
@@ -31,11 +33,8 @@ class Home extends Component {
   }
 
   handleAddToCart = product => {
-    const {dispatch} = this.props;
-    dispatch({
-      type: 'ADD_TO_CART',
-      product,
-    });
+    const {addToCart} = this.props;
+    addToCart(product);
   };
 
   renderItem = ({item}) => {
@@ -85,4 +84,11 @@ const mapStateProps = state => ({
   }, []),
 });
 
-export default connect(mapStateProps)(Home);
+const mapDispatch = dispatch => ({
+  addToCart: product => dispatch(addToCart(product)),
+});
+
+export default connect(
+  mapStateProps,
+  mapDispatch,
+)(Home);
