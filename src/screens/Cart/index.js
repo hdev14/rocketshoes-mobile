@@ -31,7 +31,7 @@ import {
 
 class Cart extends Component {
   render() {
-    const {updateAmount, removeFromCart, cart} = this.props;
+    const {updateAmount, removeFromCart, cart, total} = this.props;
 
     return (
       <Container>
@@ -62,7 +62,7 @@ class Cart extends Component {
                     />
                     <AmountIcon name="tag" color="#333" size={25} />
                   </Amount>
-                  <Subtotal>R$ 120,00</Subtotal>
+                  <Subtotal>R$ {item.subtotal}</Subtotal>
                 </ProductAmount>
               </View>
             )}
@@ -71,7 +71,7 @@ class Cart extends Component {
           <CartFooter>
             <Total>
               <TotalText>total</TotalText>
-              <TotalValue>R$ 120,00</TotalValue>
+              <TotalValue>R$ {total}</TotalValue>
             </Total>
             <CartFooterButton>
               <CartFooterButtonText>finalizar pedido</CartFooterButtonText>
@@ -84,7 +84,13 @@ class Cart extends Component {
 }
 
 const mapStateProps = state => ({
-  cart: state.cart,
+  cart: state.cart.map(product => ({
+    ...product,
+    subtotal: product.price * product.amount,
+  })),
+  total: state.cart.reduce((total, product) => {
+    return total + product.price * product.amount;
+  }, 0),
 });
 
 const mapDispatch = dispatch => bindActionCreators(CartActions, dispatch);
