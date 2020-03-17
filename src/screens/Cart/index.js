@@ -28,6 +28,14 @@ import {
 } from './styles';
 
 function Cart({dispatch, cart}) {
+  function handleUpdateAmount(id, amount) {
+    dispatch({
+      type: 'UPDATE_PRODUCT_AMOUNT',
+      id,
+      amount,
+    });
+  }
+
   function handleRemoveFromCart(id) {
     dispatch({
       type: 'REMOVE_FROM_CART',
@@ -58,7 +66,10 @@ function Cart({dispatch, cart}) {
 
               <ProductAmount>
                 <Amount>
-                  <AmountInput value={String(item.amount)} />
+                  <AmountInput
+                    value={String(item.amount)}
+                    onChange={() => handleUpdateAmount(item.id, item.amount)}
+                  />
                   <AmountIcon name="tag" color="#333" size={25} />
                 </Amount>
                 <Subtotal>R$ 120,00</Subtotal>

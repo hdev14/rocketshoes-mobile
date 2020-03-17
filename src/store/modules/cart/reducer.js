@@ -18,6 +18,22 @@ export default function cart(state = [], action) {
         }
       });
 
+    case 'UPDATE_PRODUCT_AMOUNT': {
+      if (action.amount <= 0) {
+        return state;
+      }
+
+      return produce(state, draftState => {
+        const productIndex = draftState.findIndex(
+          product => product.id === action.id,
+        );
+
+        if (productIndex >= 0) {
+          draftState[productIndex].amount = action.amount;
+        }
+      });
+    }
+
     case 'REMOVE_FROM_CART':
       return produce(state, draftState => {
         const productIndex = draftState.findIndex(
