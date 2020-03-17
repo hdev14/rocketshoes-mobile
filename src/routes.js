@@ -1,5 +1,4 @@
 import React from 'react';
-import {View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
@@ -12,12 +11,13 @@ import CartButton from './components/CartButton';
 
 const Stack = createStackNavigator();
 
-export default function Routes() {
+export default function Routes(props) {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Cart"
+        initialRouteName="Home"
         screenOptions={{
+          headerTintColor: '#fff',
           headerStyle: {
             backgroundColor: '#333',
           },

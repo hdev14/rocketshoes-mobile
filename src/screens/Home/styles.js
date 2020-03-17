@@ -43,9 +43,16 @@ export const ProductButton = styled.TouchableOpacity`
   overflow: hidden;
 `;
 
-export const CartIcon = styled(Icon)`
+export const ProductAmount = styled.View`
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
   background-color: ${darken(0.05, '#333')};
-  padding: 10px 15px;
+  padding: 10px;
+`;
+
+export const CartIcon = styled(Icon)`
+  margin-right: 10px;
 `;
 
 export const ProductButtonText = styled.Text`
@@ -54,4 +61,5 @@ export const ProductButtonText = styled.Text`
   text-align: center;
   text-transform: uppercase;
   font-size: 18px;
+  font-weight: bold;
 `;
