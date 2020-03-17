@@ -112,3 +112,9 @@ export const CartFooterButtonText = styled.Text`
   text-transform: uppercase;
   color: #eee;
 `;
+
+export const CartEmpty = styled.View`
+  margin: 20px auto;
+  justify-content: center;
+  align-items: center;
+`;

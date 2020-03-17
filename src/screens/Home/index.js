@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
 import {Text} from 'react-native';
+import {connect} from 'react-redux';
 
 import api from '../../services/api';
+
+import {addToCart} from '../../store/modules/cart/actions';
 
 import Container from '../../styles/Container';
 import {
@@ -16,7 +19,7 @@ import {
   ProductAmount,
 } from './styles';
 
-export default class Home extends Component {
+class Home extends Component {
   state = {
     products: [],
   };
@@ -29,23 +32,34 @@ export default class Home extends Component {
     });
   }
 
-  renderItem = ({item}) => (
-    <Product>
-      <ProductImg source={{uri: item.image}} />
-      <ProductName>{item.title}</ProductName>
-      <ProductValue>R$ {item.price}</ProductValue>
+  handleAddToCart = product => {
+    const {addToCart} = this.props;
+    addToCart(product);
+  };
 
-      <ProductButton title="button">
-        <ProductAmount>
-          <CartIcon name="shopping-cart" color="#ddd" size={25} />
-          <Text style={{color: '#ddd', fontSize: 18, fontWeight: 'bold'}}>
-            2
-          </Text>
-        </ProductAmount>
-        <ProductButtonText>adicionar</ProductButtonText>
-      </ProductButton>
-    </Product>
-  );
+  renderItem = ({item}) => {
+    const {amounts} = this.props;
+
+    return (
+      <Product>
+        <ProductImg source={{uri: item.image}} />
+        <ProductName>{item.title}</ProductName>
+        <ProductValue>R$ {item.price}</ProductValue>
+
+        <ProductButton
+          title="button"
+          onPress={() => this.handleAddToCart(item)}>
+          <ProductAmount>
+            <CartIcon name="shopping-cart" color="#ddd" size={25} />
+            <Text style={{color: '#ddd', fontSize: 18, fontWeight: 'bold'}}>
+              {amounts[item.id] || 0}
+            </Text>
+          </ProductAmount>
+          <ProductButtonText>adicionar</ProductButtonText>
+        </ProductButton>
+      </Product>
+    );
+  };
 
   render() {
     const {products} = this.state;
@@ -62,3 +76,19 @@ export default class Home extends Component {
     );
   }
 }
+
+const mapStateProps = state => ({
+  amounts: state.cart.reduce((amount, product) => {
+    amount[product.id] = product.amount;
+    return amount;
+  }, []),
+});
+
+const mapDispatch = dispatch => ({
+  addToCart: product => dispatch(addToCart(product)),
+});
+
+export default connect(
+  mapStateProps,
+  mapDispatch,
+)(Home);

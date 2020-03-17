@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {NavigationContext, StackActions} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Feather';
 
 import {TouchCart, ProductQuantity} from './styles';
 
-export default class CartButton extends Component {
+class CartButton extends Component {
   static contextType = NavigationContext;
 
   handleOnClick = () => {
@@ -15,11 +16,19 @@ export default class CartButton extends Component {
   };
 
   render() {
+    const {amount} = this.props;
+
     return (
       <TouchCart onPress={this.handleOnClick}>
-        <ProductQuantity>2</ProductQuantity>
+        {amount !== 0 && <ProductQuantity>{amount}</ProductQuantity>}
         <Icon name="shopping-bag" color="#fff" size={25} />
       </TouchCart>
     );
   }
 }
+
+const mapStatePros = state => ({
+  amount: state.cart.length,
+});
+
+export default connect(mapStatePros)(CartButton);
