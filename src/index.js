@@ -1,10 +1,17 @@
+import 'react-native-gesture-handler';
 import React from 'react';
-import {View, Text} from 'react-native';
+import {Provider} from 'react-redux';
+
+import './configs/ReactotronConfig';
+
+import store from './store';
+
+import Routes from './routes';
 
 export default function App() {
   return (
-    <View>
-      <Text>App</Text>
-    </View>
+    <Provider store={store}>
+      <Routes />
+    </Provider>
   );
 }
