@@ -33,7 +33,7 @@ import {
 
 class Cart extends Component {
   render() {
-    const {updateAmount, removeFromCart, cart, total} = this.props;
+    const {updateAmountRequest, removeFromCart, cart, total} = this.props;
 
     return (
       <Container>
@@ -63,7 +63,7 @@ class Cart extends Component {
                         <AmountInput
                           defaultValue={String(item.amount)}
                           onChangeText={text =>
-                            updateAmount(item.id, Number(text))
+                            updateAmountRequest(item.id, Number(text))
                           }
                         />
                         <AmountIcon name="tag" color="#333" size={25} />
