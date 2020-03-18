@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {Text} from 'react-native';
+import {Text, ActivityIndicator} from 'react-native';
 import {connect} from 'react-redux';
 
 import api from '../../services/api';
 
-import {addToCart} from '../../store/modules/cart/actions';
+import {addToCartRequest} from '../../store/modules/cart/actions';
 
 import Container from '../../styles/Container';
 import {
@@ -22,6 +22,7 @@ import {
 class Home extends Component {
   state = {
     products: [],
+    loading: true,
   };
 
   async componentDidMount() {
@@ -29,12 +30,13 @@ class Home extends Component {
 
     this.setState({
       products: response.data,
+      loading: false,
     });
   }
 
-  handleAddToCart = product => {
+  handleAddToCart = id => {
     const {addToCart} = this.props;
-    addToCart(product);
+    addToCart(id);
   };
 
   renderItem = ({item}) => {
@@ -48,7 +50,7 @@ class Home extends Component {
 
         <ProductButton
           title="button"
-          onPress={() => this.handleAddToCart(item)}>
+          onPress={() => this.handleAddToCart(item.id)}>
           <ProductAmount>
             <CartIcon name="shopping-cart" color="#ddd" size={25} />
             <Text style={{color: '#ddd', fontSize: 18, fontWeight: 'bold'}}>
@@ -62,16 +64,28 @@ class Home extends Component {
   };
 
   render() {
-    const {products} = this.state;
+    const {products, loading} = this.state;
 
     return (
       <Container>
-        <ProductList
-          horizontal
-          data={products}
-          extractorKey={item => `product-${item.id}`}
-          renderItem={this.renderItem}
-        />
+        {loading ? (
+          <ActivityIndicator
+            size="large"
+            color="#ddd"
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          />
+        ) : (
+          <ProductList
+            horizontal
+            data={products}
+            extractorKey={item => `product-${item.id}`}
+            renderItem={this.renderItem}
+          />
+        )}
       </Container>
     );
   }
@@ -85,7 +99,7 @@ const mapStateProps = state => ({
 });
 
 const mapDispatch = dispatch => ({
-  addToCart: product => dispatch(addToCart(product)),
+  addToCart: id => dispatch(addToCartRequest(id)),
 });
 
 export default connect(
