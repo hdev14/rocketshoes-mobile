@@ -46,7 +46,7 @@ class Home extends Component {
       <Product>
         <ProductImg source={{uri: item.image}} />
         <ProductName>{item.title}</ProductName>
-        <ProductValue>R$ {item.price}</ProductValue>
+        <ProductValue>R$ {item.price.toLocaleString('pt-BR')}</ProductValue>
 
         <ProductButton
           title="button"
