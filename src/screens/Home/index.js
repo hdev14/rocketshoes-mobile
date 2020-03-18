@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text} from 'react-native';
+import {Text, ActivityIndicator} from 'react-native';
 import {connect} from 'react-redux';
 
 import api from '../../services/api';
@@ -22,6 +22,7 @@ import {
 class Home extends Component {
   state = {
     products: [],
+    loading: true,
   };
 
   async componentDidMount() {
@@ -29,6 +30,7 @@ class Home extends Component {
 
     this.setState({
       products: response.data,
+      loading: false,
     });
   }
 
@@ -62,16 +64,28 @@ class Home extends Component {
   };
 
   render() {
-    const {products} = this.state;
+    const {products, loading} = this.state;
 
     return (
       <Container>
-        <ProductList
-          horizontal
-          data={products}
-          extractorKey={item => `product-${item.id}`}
-          renderItem={this.renderItem}
-        />
+        {loading ? (
+          <ActivityIndicator
+            size="large"
+            color="#ddd"
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          />
+        ) : (
+          <ProductList
+            horizontal
+            data={products}
+            extractorKey={item => `product-${item.id}`}
+            renderItem={this.renderItem}
+          />
+        )}
       </Container>
     );
   }
