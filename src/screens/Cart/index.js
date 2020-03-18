@@ -88,7 +88,7 @@ class Cart extends Component {
             <CartEmpty>
               <Icon name="shopping-cart" color="#ddd" size={60} />
               <Text style={{color: '#ddd', fontWeight: 'bold', fontSize: 20}}>
-                Carrinho estava vázio
+                Carrinho está vázio
               </Text>
             </CartEmpty>
           )}
