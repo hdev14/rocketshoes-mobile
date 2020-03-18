@@ -32,9 +32,9 @@ class Home extends Component {
     });
   }
 
-  handleAddToCart = product => {
-    const {addToCartRequest} = this.props;
-    addToCartRequest(product);
+  handleAddToCart = id => {
+    const {addToCart} = this.props;
+    addToCart(id);
   };
 
   renderItem = ({item}) => {
@@ -48,7 +48,7 @@ class Home extends Component {
 
         <ProductButton
           title="button"
-          onPress={() => this.handleAddToCart(item)}>
+          onPress={() => this.handleAddToCart(item.id)}>
           <ProductAmount>
             <CartIcon name="shopping-cart" color="#ddd" size={25} />
             <Text style={{color: '#ddd', fontSize: 18, fontWeight: 'bold'}}>
@@ -85,7 +85,7 @@ const mapStateProps = state => ({
 });
 
 const mapDispatch = dispatch => ({
-  addToCartRequest: product => dispatch(addToCartRequest(product)),
+  addToCart: id => dispatch(addToCartRequest(id)),
 });
 
 export default connect(
