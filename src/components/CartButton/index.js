@@ -1,34 +1,23 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {NavigationContext, StackActions} from '@react-navigation/native';
+import React from 'react';
+import {useSelector} from 'react-redux';
+import {StackActions, useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Feather';
 
 import {TouchCart, ProductQuantity} from './styles';
 
-class CartButton extends Component {
-  static contextType = NavigationContext;
+export default function CartButton() {
+  const amount = useSelector(state => state.cart.length);
+  const navigation = useNavigation();
 
-  handleOnClick = () => {
-    const navigation = this.context;
+  function handleOnClick() {
     const pushAction = StackActions.push('Cart');
-
     navigation.dispatch(pushAction);
-  };
-
-  render() {
-    const {amount} = this.props;
-
-    return (
-      <TouchCart onPress={this.handleOnClick}>
-        {amount !== 0 && <ProductQuantity>{amount}</ProductQuantity>}
-        <Icon name="shopping-bag" color="#fff" size={25} />
-      </TouchCart>
-    );
   }
+
+  return (
+    <TouchCart onPress={handleOnClick}>
+      {amount !== 0 && <ProductQuantity>{amount}</ProductQuantity>}
+      <Icon name="shopping-bag" color="#fff" size={25} />
+    </TouchCart>
+  );
 }
-
-const mapStatePros = state => ({
-  amount: state.cart.length,
-});
-
-export default connect(mapStatePros)(CartButton);
