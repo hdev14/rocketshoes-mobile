@@ -2,7 +2,7 @@ INTERFACE PARA UM APLICATIVO DE VENDAS DE TÊNIS/SAPATOS
 
 >Pequeno app desenvolvido com o objetivo de aprimorar o conhecimento sobre **React Native** e **Redux**.
 
-Esse **app** simular um pequena loja de tênis/sapatos. O funcionamento dele pode ser vista abaixo:
+Esse **app** simula uma pequena loja de tênis/sapatos. O funcionamento dele pode ser vista abaixo:
 
 ![app](docs/app.gif)
 
